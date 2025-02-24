@@ -26,6 +26,7 @@ async def getContactHandler( message : Message,bot : Bot, state : FSMContext):
         await message.answer('Faqat ozingizni kontaktingizni yubora olasiz.')
         return 
     number = message.contact.phone_number
+    if not number.startswith('+'): number = '+'+ number
     userdata, created  = UserData.objects.get_or_create(phone=number)
     userdata.telegram_id = message.from_user.id
     userdata.save()
